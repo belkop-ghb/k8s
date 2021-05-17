@@ -22,7 +22,7 @@ We will be using Pigallery2 application as an example
 
 
 ## Step 1 - Create a pod
-[Kubectl Pods and Containers](https://kubernetes.io/docs/tasks/configure-pod-container/ "Kubectl Pods and Containers")
+[Kubernetes Pods and Containers](https://kubernetes.io/docs/tasks/configure-pod-container/ "Kubernetes Pods and Containers")
 
 ### Manual way
 One-time create - only for test purpose
@@ -39,4 +39,27 @@ Template has been created for you - see step1-pod.yaml
 To apply the template:
 ```sh
 kubectl apply -f step1-pod.yaml
+```
+
+## Step 2 - create service
+Service will expose the pod port.
+
+[Kubernetes services](https://kubernetes.io/docs/concepts/services-networking/service/ "Kubernetes services")
+
+
+
+Generate service template:
+
+```sh
+kubectl create service nodeport pigallery2 --tcp=80 --node-port=30080 --dry-run=client -o yaml > step2-service.yaml
+```
+
+Use service template:
+```sh
+kubectl apply -f step2-service.yaml
+```
+
+Check the service:
+```sh
+kubectl describe service pigallery2
 ```
