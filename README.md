@@ -63,3 +63,47 @@ Check the service:
 ```sh
 kubectl describe service pigallery2
 ```
+
+Check the application in browser:
+
+http://\<VM-IP>:30080
+
+Copy the images to the pod and check it in the browser:
+````sh
+kubectl cp images pigallery2:/app/data/images
+````
+
+Check the browser again.
+
+## Step 3 - create deployment
+Service will expose the pod port.
+
+[Kubernetes services](https://kubernetes.io/docs/concepts/services-networking/service/ "Kubernetes services")
+
+You can create a deployment template (already generated as step3-deployment.yaml):
+```sh
+kubectl create deployment pigallery2 --image=bpatrik/pigallery2:1.8.2 --replicas=1 -o yaml --dry-run=client > deploymentTemplate.yaml
+```
+
+See the step3-deployment.yaml - deployment and service are in one common file:
+```sh
+cat step3-deployment.yaml
+```
+
+Delete all object based on the label:
+```sh
+kubectl delete all -l app=pigallery2
+```
+
+Use the template to create the deployment and service:
+```sh
+kubectl apply -f step3-deployment.yaml
+```
+
+Try to delete the pod:
+```sh
+kubectl delete pod -l app=pigallery2
+```
+
+
+
