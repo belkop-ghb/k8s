@@ -188,6 +188,12 @@ sudo cp -r images/ /opt/
 
 Check the application in the browser.
 
+Try to delete the pod:
+
+```sh
+kubectl delete pod -l app=pigallery2
+```
+
 ## Step 7 - persistent volume
 
 [Kubernetes persistent volume](https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/ "Kubernetes persistent volume")
