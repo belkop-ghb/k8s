@@ -194,3 +194,13 @@ Check and apply template file:
 ```sh
 kubectl apply -f step7-persistent-volume.yaml
 ```
+
+## Step 8 - probes
+
+[Kubernetes probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/ "Kubernetes probes")
+
+Check and apply template file:
+
+```sh
+kubectl apply -f step8-probes.yaml
+```
