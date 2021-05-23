@@ -184,3 +184,13 @@ sudo cp -r images/ /opt/
 ```
 
 Check the application in the browser.
+
+## Step 7 - persistent volume
+
+[Kubernetes persistent volume](https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/ "Kubernetes persistent volume")
+
+Check and apply template file:
+
+```sh
+kubectl apply -f step7-persistent-volume.yaml
+```
