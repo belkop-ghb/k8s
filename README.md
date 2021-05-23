@@ -177,7 +177,7 @@ kubectl apply -f step5-configmap.yaml
 Check and apply the template:
 
 ```sh
-kubectl apply -f step4-volume.yaml
+kubectl apply -f step6-volume.yaml
 ```
 
 Copy images from git repository to the path configured in the volume:
