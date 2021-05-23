@@ -24,9 +24,12 @@ We will be using Pigallery2 application as an example
 * [Pigallery2 docker homepage](https://hub.docker.com/r/bpatrik/pigallery2 "Pigallery2 docker homepage")
 * [Pigallery2 homepage](http://bpatrik.github.io/pigallery2/ "Pigallery2 homepage")
 
-## Step 1 - Create a pod
+## Step 1 - pod
 
 [Kubernetes Pods and Containers](https://kubernetes.io/docs/tasks/configure-pod-container/ "Kubernetes Pods and Containers")
+
+See central docker image repository:
+[Docker hub](https://hub.docker.com/ "Docker hub")
 
 ### Manual way
 
@@ -50,7 +53,7 @@ To apply the template:
 kubectl apply -f step1-pod.yaml
 ```
 
-## Step 2 - create service
+## Step 2 - service
 
 Service will expose the pod port.
 
@@ -86,7 +89,7 @@ kubectl cp images pigallery2:/app/data/images
 
 Check the browser again.
 
-## Step 3 - create deployment
+## Step 3 - deployment
 
 Deployment will cover replicas and container image version.
 
@@ -203,4 +206,11 @@ Check and apply template file:
 
 ```sh
 kubectl apply -f step8-probes.yaml
+```
+
+Delete the pod and watch when it will be ready:
+
+```sh
+kubectl delete pod -l app=pigallery2
+watch -n 2 kubectl get pods
 ```
