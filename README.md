@@ -13,7 +13,7 @@ NAME     STATUS   ROLES    AGE   VERSION
 ubuntu   Ready    <none>   22h   v1.20.6-34+e4abae43f6acde
 ```
 
-* Cloned k8s repository
+* k8s Github repository cloned in the VM
 ```sh
 git clone https://github.com/belkop-ghb/k8s.git
 ```
