@@ -25,7 +25,9 @@ cd k8s
 
 ## Recomended
 
-* WinSCP or similar software on your local computer - will be used to edit template file in an graphical editor (Notepad++ for example) instead of your console
+* WinSCP or similar software on your local computer - will be used to edit template file in a graphical editor (Notepad++ for example) instead of linux console
+
+* Two displays - one for watching, second for working
 
 ## Application
 
