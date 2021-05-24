@@ -34,6 +34,16 @@ We will be using Pigallery2 application as an example
 * [Pigallery2 docker homepage](https://hub.docker.com/r/bpatrik/pigallery2 "Pigallery2 docker homepage")
 * [Pigallery2 homepage](http://bpatrik.github.io/pigallery2/ "Pigallery2 homepage")
 
+## Step 0 - node
+
+Node is already installed - microk8s or other kubernetes implementation.
+
+[Kubernetes node](https://kubernetes.io/docs/concepts/architecture/nodes/ "Kubernetes node")
+
+```sh
+kubectl get nodes -o wide
+```
+
 ## Step 1 - pod
 
 [Kubernetes Pods and Containers](https://kubernetes.io/docs/tasks/configure-pod-container/ "Kubernetes Pods and Containers")
