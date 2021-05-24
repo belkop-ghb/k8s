@@ -13,6 +13,16 @@ NAME     STATUS   ROLES    AGE   VERSION
 ubuntu   Ready    <none>   22h   v1.20.6-34+e4abae43f6acde
 ```
 
+* Cloned k8s repository
+```sh
+git clone https://github.com/belkop-ghb/k8s.git
+```
+
+Enter the cloned repository. Scripts will use files of this repository.
+```sh
+cd k8s
+```
+
 ## Recomended
 
 * WinSCP or similar software on your local computer - will be used to edit template file in an graphical editor (Notepad++ for example) instead of your console
