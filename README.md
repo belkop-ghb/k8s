@@ -3,7 +3,8 @@
 ## Prerequisites
 
 * Linux with installed Kubernetes (VM, physical machine, does not matter)
-* Command line console with connection to the Kubernetes
+    * see [microk8s in Ubuntu](Microk8s-in-Ubuntu-Server.docx) as an inspiration
+* Command line console with connection to the Kubernetes (putty, WSL, cmd... does not matter)
 
 You should see something similar in you console:
 
