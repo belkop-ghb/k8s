@@ -147,7 +147,7 @@ Try to delete the pod:
 kubectl delete pod -l app=pigallery2
 ```
 
-Deploy new version:
+### Deploy new version
 
 ```sh
 kubectl set image deployment pigallery2 pigallery2=bpatrik/pigallery2:1.8.5
@@ -167,6 +167,30 @@ Revert to old version:
 
 ```sh
 kubectl rollout undo deployment pigallery2
+```
+
+### Scale deployment - create more replicas
+
+```sh
+kubectl scale deployment pigallery2 --replicas=3 
+```
+
+Check pods:
+
+```sh
+kubectl get pods
+```
+
+Check service endpoints:
+
+```sh
+kubectl describe service pigallery2
+```
+
+Scale deployment back to 1 replica
+
+```sh
+kubectl scale deployment pigallery2 --replicas=1
 ```
 
 ## Step 4 - environment variables
