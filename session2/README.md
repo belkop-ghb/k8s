@@ -62,18 +62,18 @@ kubectl apply -f session2/step1-db.yaml
 Check the pod:
 
 ```sh
-kubectl describe pod -l app=mariadb
+kubectl -n mariadb describe pod -l app=mariadb
 ```
 
 Check the service:
 ```sh
-kubectl describe service -l app=mariadb
+kubectl -n mariadb describe service -l app=mariadb
 ```
 
 Connect to the database:
 
 ```sh
-kubectl exec -it <mariadb-pod> -- mysql -u pigallery2 -ppigallery2PWD -D pigallery2DB
+kubectl -n mariadb exec -it <mariadb-pod> -- mysql -u pigallery2 -ppigallery2PWD -D pigallery2DB
 ```
 
 You should see:
