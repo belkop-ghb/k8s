@@ -28,6 +28,12 @@ Check, if your DNS is enabled.
 microk8s status
 ```
 
+If the DNS is not enabled, enable it:
+
+```sh
+microk8s enable dns
+```
+
 ## Step1 - Database
 
 We will create a database template using knowledge earned in [session1](../session1).
