@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: pigallery2
+  name: pigallery2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pigallery2
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: pigallery2
+    spec:
+      containers:
+      - image: bpatrik/pigallery2:1.8.2
+        name: pigallery2
+        env:
+        - name: Client-applicationTitle
+          value: "Hands-on session demo"
+        - name: Client-Search-enabled
+          valueFrom: 
+            configMapKeyRef:
+              name: pigallery2-config
+              key: SEARCH_ENABLED
+        envFrom:
+        - configMapRef:
+            name: pigallery2-config
+        resources: {}
+status: {}
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: pigallery2
+  name: pigallery2
+spec:
+  ports:
+  - name: "http"
+    port: 80
+    protocol: TCP
+    targetPort: 80
+    nodePort: 30080
+  selector:
+    app: pigallery2
+  type: NodePort
+status:
+  loadBalancer: {}
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: pigallery2
+  name: pigallery2-config
+  namespace: default
+data:
+  Client-Faces-enabled: "false"
+  SEARCH_ENABLED: "false"
