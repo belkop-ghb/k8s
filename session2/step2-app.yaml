@@ -95,6 +95,7 @@ data:
   Client-Faces-enabled: "false"
   SEARCH_ENABLED: "false"
   Client-authenticationRequired: "false"
+  Client-Sharing-enabled: "false"
 
 ---
 
