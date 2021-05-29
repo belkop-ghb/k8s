@@ -3,14 +3,16 @@
 ## Prerequisites
 
 * Linux with installed Kubernetes (VM, physical machine, does not matter)
-    * see [microk8s in Ubuntu](Microk8s-in-Ubuntu-Server.docx) as an inspiration
+  * see [microk8s in Ubuntu](Microk8s-in-Ubuntu-Server.docx) as an inspiration
 * Command line console with connection to the Kubernetes (putty, WSL, cmd... does not matter)
 * k8s Github repository cloned in the VM
+
 ```sh
-git clone https://github.ibm.com/Peter-Belko/k8s.git
+git clone https://github.com/belkop-ghb/k8s.git
 ```
 
 Enter the cloned repository. Scripts will use files of this repository.
+
 ```sh
 cd k8s
 ```
