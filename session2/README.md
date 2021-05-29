@@ -19,6 +19,15 @@ Check the application in browser:
 
 http://\<VM-IP>:30080
 
+## Prerequisite
+
+In order to use DNS names we must enable DNS in microk8s.
+Check, if your DNS is enabled.
+
+```sh
+microk8s status
+```
+
 ## Step1 - Database
 
 We will create a database template using knowledge earned in [session1](../session1).
@@ -82,7 +91,7 @@ Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 MariaDB [pigallery2DB]>
 ```
 
-## Step 2 - adapt sample application to use the database
+## Step 2 - prepare sample application to use the database
 
 We have copied the last template of session1 as a starting point to next steps:
 
@@ -91,11 +100,36 @@ We have copied the last template of session1 as a starting point to next steps:
 Changes have been performed on the template *step2-app.yaml*:
 
 * Readiness and liveness probes
-* Secret
-* ConfigMap
-* Pod - using secrets
+* ConfigMap - login disabled
+* Pod - config volume
+
+Check the template: [step2-app.yaml](step2-app.yaml)
+
+Add folder for the application configuration:
+
+```sh
+sudo mkdir /opt/pigallery2
+```
+
+Apply the application template:
+
+```sh
+kubectl apply -f session2/step2-app.yaml
+```
+
+## Step 3 - adapt application to use database
 
 See App documentation how to correctly configure the secret keys:
 [Pigallery2 manual page](https://github.com/bpatrik/pigallery2/blob/master/MANPAGE.md "Pigallery2 manual page")
 
-Check the template: [step2-app.yaml](step2-app.yaml)
+Check the template: [step3-app.yaml](step3-app-db.yaml)
+
+* Secret
+* ConfigMap
+* Pod
+
+Apply the template:
+
+```sh
+kubectl apply -f session2/step3-app-db.yaml
+```

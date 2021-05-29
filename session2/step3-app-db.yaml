@@ -1,0 +1,148 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: pigallery2
+  name: pigallery2
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pigallery2
+  template:
+    metadata:
+      labels:
+        app: pigallery2
+      namespace: default
+    spec:
+      containers:
+      - image: bpatrik/pigallery2:1.8.2
+        name: pigallery2
+        env:
+        - name: Client-applicationTitle
+          value: "Hands-on session demo"
+        - name: Client-Search-enabled
+          valueFrom: 
+            configMapKeyRef:
+              name: pigallery2-config
+              key: SEARCH_ENABLED
+        envFrom:
+        - configMapRef:
+            name: pigallery2-config
+        - secretRef:
+            name: mariadb-secret
+        livenessProbe:
+          httpGet:
+            path: /heartbeat
+            port: 80
+          initialDelaySeconds: 15
+          periodSeconds: 20
+          failureThreshold: 5
+        readinessProbe:
+          httpGet:
+            path: /heartbeat
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 20
+          failureThreshold: 5
+        volumeMounts:
+        - mountPath: /app/data/images
+          name: image-volume
+        - mountPath: /app/data/db
+          name: conf-volume
+      volumes:
+      - name: image-volume
+        persistentVolumeClaim:
+          claimName: pigallery2-pvc
+      - name: conf-volume
+        hostPath:
+          path: /opt/pigallery2
+          type: Directory
+status: {}
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: pigallery2
+  name: pigallery2
+  namespace: default
+spec:
+  ports:
+  - name: "http"
+    port: 80
+    protocol: TCP
+    targetPort: 80
+    nodePort: 30080
+  selector:
+    app: pigallery2
+  type: NodePort
+status:
+  loadBalancer: {}
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: pigallery2
+  name: pigallery2-config
+  namespace: default
+data:
+  Client-Faces-enabled: "false"
+  SEARCH_ENABLED: "false"
+  Client-authenticationRequired: "false"
+  Client-Sharing-enabled: "false"
+  Server-Database-type: "mysql"
+  MYSQL_HOST: "mariadb-svc.mariadb.svc.cluster.local"
+  MYSQL_PORT: "3306"
+
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pigallery2-pv
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/opt/images"
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pigallery2-pvc
+  namespace: default
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mariadb-secret
+  namespace: default
+type: Opaque
+data:
+  MYSQL_DATABASE: cGlnYWxsZXJ5MkRC
+  MYSQL_USERNAME: cGlnYWxsZXJ5Mg==
+  MYSQL_PASSWORD: cGlnYWxsZXJ5MlBXRA==
