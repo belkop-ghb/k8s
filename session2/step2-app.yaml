@@ -30,8 +30,6 @@ spec:
         envFrom:
         - configMapRef:
             name: pigallery2-config
-        - secretRef:
-            name: mariadb-secret
         livenessProbe:
           httpGet:
             path: /heartbeat
@@ -97,9 +95,6 @@ data:
   Client-Faces-enabled: "false"
   SEARCH_ENABLED: "false"
   Client-authenticationRequired: "false"
-  Server-Database-type: "mysql"
-  MYSQL_HOST: "mariadb-svc.mariadb.svc.cluster.local"
-  MYSQL_PORT: "3306"
 
 ---
 
@@ -132,16 +127,3 @@ spec:
   resources:
     requests:
       storage: 1Gi
-
----
-
-apiVersion: v1
-kind: Secret
-metadata:
-  name: mariadb-secret
-  namespace: default
-type: Opaque
-data:
-  MYSQL_DATABASE: cGlnYWxsZXJ5MkRC
-  MYSQL_USERNAME: cGlnYWxsZXJ5Mg==
-  MYSQL_PASSWORD: cGlnYWxsZXJ5MlBXRA==
