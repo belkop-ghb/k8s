@@ -139,3 +139,15 @@ Apply the template:
 ```sh
 kubectl apply -f session2/step3-app-db.yaml
 ```
+
+Connect to the database:
+
+```sh
+kubectl -n mariadb exec -it <mariadb-pod> -- mysql -u pigallery2 -ppigallery2PWD -D pigallery2DB
+```
+
+In the database, chcek the data:
+
+```sql
+select id, name from media_entity;
+```
