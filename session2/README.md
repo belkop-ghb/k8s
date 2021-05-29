@@ -81,3 +81,21 @@ Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 
 MariaDB [pigallery2DB]>
 ```
+
+## Step 2 - adapt sample application to use the database
+
+We have copied the last template of session1 as a starting point to next steps:
+
+*cp session1/step8-probes.yaml session2/step2-app.yaml*
+
+Changes have been performed on the template *step2-app.yaml*:
+
+* Readiness and liveness probes
+* Secret
+* ConfigMap
+* Pod - using secrets
+
+See App documentation how to correctly configure the secret keys:
+[Pigallery2 manual page](https://github.com/bpatrik/pigallery2/blob/master/MANPAGE.md "Pigallery2 manual page")
+
+Check the template: [step2-app.yaml](step2-app.yaml)
