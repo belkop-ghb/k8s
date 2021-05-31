@@ -68,18 +68,18 @@ kubectl apply -f session2/step1-db.yaml
 Check the pod:
 
 ```sh
-kubectl -n mariadb describe pod -l app=mariadb
+kubectl describe pod -l app=mariadb
 ```
 
 Check the service:
 ```sh
-kubectl -n mariadb describe service -l app=mariadb
+kubectl describe service -l app=mariadb
 ```
 
 Connect to the database:
 
 ```sh
-kubectl -n mariadb exec -it <mariadb-pod> -- mysql -u pigallery2 -ppigallery2PWD -D pigallery2DB
+kubectl exec -it <mariadb-pod> -- mysql -u pigallery2 -ppigallery2PWD -D pigallery2DB
 ```
 
 You should see:
@@ -143,7 +143,7 @@ kubectl apply -f session2/step3-app-db.yaml
 Connect to the database:
 
 ```sh
-kubectl -n mariadb exec -it <mariadb-pod> -- mysql -u pigallery2 -ppigallery2PWD -D pigallery2DB
+kubectl exec -it <mariadb-pod> -- mysql -u pigallery2 -ppigallery2PWD -D pigallery2DB
 ```
 
 In the database, check the data:
