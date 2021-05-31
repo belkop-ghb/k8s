@@ -146,8 +146,50 @@ Connect to the database:
 kubectl -n mariadb exec -it <mariadb-pod> -- mysql -u pigallery2 -ppigallery2PWD -D pigallery2DB
 ```
 
-In the database, chcek the data:
+In the database, check the data:
 
 ```sql
 select id, name from media_entity;
+```
+
+Check the connectivity between app *pod* and DB *service*:
+
+```sh
+kubectl exec -it <podName> -- wget --spider --timeout=3 mariadb-svc.default.svc.cluster.local:3306
+```
+
+If you see something like : *HTTP request sent, awaiting response... 200 No headers, assuming HTTP/0.9*, connection is successful.
+
+## Step 4 - apply restrictive network policy
+
+Check and apply the template: [step4-restrictive-np.yaml](step4-restrictive-np.yaml)
+
+```sh
+kubectl apply -f session2/step4-restrictive-np.yaml
+```
+
+Check the connectivity between app *pod* and DB *service*:
+
+```sh
+kubectl exec -it <podName> -- wget --spider --timeout=3 mariadb-svc.default.svc.cluster.local:3306
+```
+
+You should see something like: *... failed: Connection timed out.*
+
+## Step 5 - allow incoming to DB
+
+Check and apply the template: [step5-network-policy.yaml](step5-network-policy.yaml)
+
+```sh
+kubectl apply -f session2/step5-network-policy.yaml
+```
+
+This will allow the incoming communication to pods with specified label.
+
+## Step 6 - adapt the app pod to communicate with DB
+
+Add the specified label to the pod:
+
+```sh
+kubectl apply -f session2/step6-app.yaml
 ```
