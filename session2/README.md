@@ -160,36 +160,29 @@ kubectl exec -it <podName> -- wget --spider --timeout=3 mariadb-svc.default.svc.
 
 If you see something like : *HTTP request sent, awaiting response... 200 No headers, assuming HTTP/0.9*, connection is successful.
 
-## Step 4 - apply restrictive network policy
+## Step 4 - create productive namespace
 
-Check and apply the template: [step4-restrictive-np.yaml](step4-restrictive-np.yaml)
+Let's say, that we have more instances of the same application.
+We have to separate these two instances - into two namespaces (default / productive).
+
+Check and apply the template: [step4-namespace.yaml](step4-namespace.yaml)
 
 ```sh
-kubectl apply -f session2/step4-restrictive-np.yaml
+kubectl apply -f session2/step4-namespace.yaml
 ```
 
-Check the connectivity between app *pod* and DB *service*:
+## Step 5 - create productive database
+
+Check and apply the template: [step5-db-prod.yaml](step5-db-prod.yaml)
 
 ```sh
-kubectl exec -it <podName> -- wget --spider --timeout=3 mariadb-svc.default.svc.cluster.local:3306
+kubectl apply -f session2/step5-db-prod.yaml
 ```
 
-You should see something like: *... failed: Connection timed out.*
+## Step 6 - create productive app
 
-## Step 5 - allow incoming to DB
-
-Check and apply the template: [step5-network-policy.yaml](step5-network-policy.yaml)
+Check and apply the template: [step6-app-prod.yaml](step6-app-prod.yaml)
 
 ```sh
-kubectl apply -f session2/step5-network-policy.yaml
-```
-
-This will allow the incoming communication to pods with specified label.
-
-## Step 6 - adapt the app pod to communicate with DB
-
-Add the specified label to the pod:
-
-```sh
-kubectl apply -f session2/step6-app.yaml
+kubectl apply -f session2/step6-app-prod.yaml
 ```
