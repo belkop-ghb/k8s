@@ -1,0 +1,112 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mariadb-svc
+  namespace: production
+  labels:
+    app: mariadb
+spec:
+  ports:
+  - port: 3306
+    name: tcp
+  selector:
+    app: mariadb
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mariadb
+  name: mariadb
+  namespace: production
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mariadb
+  template:
+    metadata:
+      labels:
+        app: mariadb
+      namespace: production
+    spec:
+      containers:
+      - image: mariadb:10.6
+        name: mariadb-c
+        envFrom:
+        - secretRef:
+            name: mariadb-secret
+        ports:
+        - containerPort: 3306
+          name: tcp
+        livenessProbe:
+          tcpSocket:
+            port: 3306
+          initialDelaySeconds: 15
+          periodSeconds: 20
+          failureThreshold: 5
+        readinessProbe:
+          tcpSocket:
+            port: 3306
+          initialDelaySeconds: 10
+          periodSeconds: 20
+          failureThreshold: 5
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: db-volume
+      volumes:
+      - name: db-volume
+        persistentVolumeClaim:
+          claimName: mariadb-pvc
+status: {}
+
+---
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mariadb-secret
+  namespace: production
+type: Opaque
+data:
+  MARIADB_ROOT_PASSWORD: c3VwZXJTdHJvbmdQYXNzd29yZA==
+  MARIADB_DATABASE: cGlnYWxsZXJ5MkRC
+  MARIADB_USER: cGlnYWxsZXJ5Mg==
+  MARIADB_PASSWORD: cGlnYWxsZXJ5MlBXRA==
+
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mariadb-prod-pv
+  labels:
+    type: local
+    app: mariadb
+spec:
+  storageClassName: mariadb-prod
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/opt/mariadb-prod/data"
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mariadb-pvc
+  namespace: production
+  labels:
+    app: mariadb
+spec:
+  storageClassName: mariadb-prod
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi

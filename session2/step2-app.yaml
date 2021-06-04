@@ -47,6 +47,7 @@ spec:
         volumeMounts:
         - mountPath: /app/data/images
           name: image-volume
+          readOnly: true
         - mountPath: /app/data/db
           name: conf-volume
       volumes:
