@@ -179,10 +179,40 @@ Check and apply the template: [step5-db-prod.yaml](step5-db-prod.yaml)
 kubectl apply -f session2/step5-db-prod.yaml
 ```
 
+Check the pod is working:
+
+```sh
+kubectl get pods -n production
+```
+
 ## Step 6 - create productive app
 
 Check and apply the template: [step6-app-prod.yaml](step6-app-prod.yaml)
 
 ```sh
 kubectl apply -f session2/step6-app-prod.yaml
+```
+
+Check the pod is working:
+
+```sh
+kubectl get pods -n production
+```
+
+Check, that the productive instance is running:
+
+*http://<VM's IP>:30081*
+
+Check the connection between
+
+```sh
+kubectl exec -it <podName> -- wget --spider --timeout=3 mariadb-svc.production.svc.cluster.local:3306
+```
+
+## Step 7 - network policy
+
+Check and apply the template: [step7-network-policy.yaml](step7-network-policy.yaml)
+
+```sh
+kubectl apply -f session2/step7-network-policy.yaml
 ```
