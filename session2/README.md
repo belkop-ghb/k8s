@@ -190,6 +190,10 @@ kubectl get pods -n production
 Check and apply the template: [step6-app-prod.yaml](step6-app-prod.yaml)
 
 ```sh
+sudo cp -r /opt/pigallery2/ /opt/pigallery2-prod
+```
+
+```sh
 kubectl apply -f session2/step6-app-prod.yaml
 ```
 
@@ -203,7 +207,7 @@ Check, that the productive instance is running:
 
 *http://<VM's IP>:30081*
 
-Check the connection between
+Check the connection between DEFAULT pod and PRODUCTION DB:
 
 ```sh
 kubectl exec -it <podName> -- wget --spider --timeout=3 mariadb-svc.production.svc.cluster.local:3306
