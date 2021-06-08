@@ -34,6 +34,12 @@ If the DNS is not enabled, enable it:
 microk8s enable dns
 ```
 
+If the metrics-server is not enabled, enable it:
+
+```sh
+microk8s enable metrics-server
+```
+
 ## Step1 - Database
 
 We will create a database template using knowledge earned in [session1](../session1).
@@ -227,6 +233,8 @@ kubectl exec -it <podName> -- wget --spider --timeout=3 mariadb-svc.production.s
 
 ## Step 7 - network policy
 
+[Kubernetes network policies](https://kubernetes.io/docs/concepts/services-networking/network-policies/ "Kubernetes network policies")
+
 Check and apply the template: [step7-network-policy.yaml](step7-network-policy.yaml)
 
 ```sh
@@ -239,6 +247,34 @@ Check and apply the template: [step8-app-prod.yaml](step8-app-prod.yaml)
 
 ```sh
 kubectl apply -f session2/step8-app-prod.yaml
+```
+
+## Step 9 - resources
+
+[Container resources](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/ "Container resources")
+
+Copy a sample video to the images folder:
+
+```sh
+sudo cp videos/earth.mp4 /opt/images/
+```
+
+Run a video conversion and watch the load:
+
+```sh
+watch -n 1 kubectl top pods
+```
+
+Check and apply the template: [step9-app-resources.yaml](step9-app-resources.yaml)
+
+```sh
+kubectl apply -f session2/step9-app-resources.yaml
+```
+
+Run a video conversion again and watch the load:
+
+```sh
+watch -n 1 kubectl top pods
 ```
 
 ## Common troubleshooting
