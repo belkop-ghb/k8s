@@ -34,6 +34,12 @@ If the DNS is not enabled, enable it:
 microk8s enable dns
 ```
 
+If the metrics-server is not enabled, enable it:
+
+```sh
+microk8s enable metrics-server
+```
+
 ## Step1 - Database
 
 We will create a database template using knowledge earned in [session1](../session1).
@@ -250,7 +256,7 @@ kubectl apply -f session2/step8-app-prod.yaml
 Copy a sample video to the images folder:
 
 ```sh
-sudo cp videos/earth.mp4 /opt/images/sample1.mp4
+sudo cp videos/earth.mp4 /opt/images/
 ```
 
 Run a video conversion and watch the load:
