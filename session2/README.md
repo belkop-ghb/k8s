@@ -213,10 +213,56 @@ Check the connection between DEFAULT pod and PRODUCTION DB:
 kubectl exec -it <podName> -- wget --spider --timeout=3 mariadb-svc.production.svc.cluster.local:3306
 ```
 
+Switch namespace in the context:
+
+```sh
+kubectl config set-context --current --namespace=production
+```
+
+Check the connection between PRODUCTION pod and PRODUCTION DB:
+
+```sh
+kubectl exec -it <podName> -- wget --spider --timeout=3 mariadb-svc.production.svc.cluster.local:3306
+```
+
 ## Step 7 - network policy
 
 Check and apply the template: [step7-network-policy.yaml](step7-network-policy.yaml)
 
 ```sh
 kubectl apply -f session2/step7-network-policy.yaml
+```
+
+## Step 8 - application pod labels
+
+Check and apply the template: [step8-app-prod.yaml](step8-app-prod.yaml)
+
+```sh
+kubectl apply -f session2/step8-app-prod.yaml
+```
+
+## Common troubleshooting
+
+Logs of the pod:
+
+```sh
+kubectl logs -f <pod_name>
+```
+
+Events in the namespace:
+
+```sh
+kubectl get events
+```
+
+Get all objects:
+
+```sh
+kubectl get all --all-namespaces
+```
+
+Delete all objects of the template:
+
+```sh
+kubectl delete -f <templateName.yaml>
 ```
