@@ -1,0 +1,158 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: pigallery2
+  name: pigallery2
+  namespace: production
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pigallery2
+  template:
+    metadata:
+      labels:
+        app: pigallery2
+        access: mariadb
+        stage: production
+      namespace: production
+    spec:
+      containers:
+      - image: bpatrik/pigallery2:1.8.2
+        name: pigallery2
+        env:
+        - name: Client-applicationTitle
+          value: "Hands-on session PROD"
+        - name: Client-Search-enabled
+          valueFrom: 
+            configMapKeyRef:
+              name: pigallery2-config
+              key: SEARCH_ENABLED
+        - name: MYSQL_DATABASE
+          valueFrom: 
+            secretKeyRef:
+              name: mariadb-secret
+              key: MARIADB_DATABASE
+        - name: MYSQL_USERNAME
+          valueFrom: 
+            secretKeyRef:
+              name: mariadb-secret
+              key: MARIADB_USER
+        - name: MYSQL_PASSWORD
+          valueFrom: 
+            secretKeyRef:
+              name: mariadb-secret
+              key: MARIADB_PASSWORD
+        envFrom:
+        - configMapRef:
+            name: pigallery2-config
+        livenessProbe:
+          httpGet:
+            path: /heartbeat
+            port: 80
+          initialDelaySeconds: 15
+          periodSeconds: 20
+          failureThreshold: 5
+        readinessProbe:
+          httpGet:
+            path: /heartbeat
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 20
+          failureThreshold: 5
+        resources:
+          requests:
+            memory: "20Mi"
+            cpu: "10m"
+          limits:
+            memory: "200Mi"
+            cpu: "100m"
+        volumeMounts:
+        - mountPath: /app/data/images
+          name: image-volume
+          readOnly: true
+        - mountPath: /app/data/db
+          name: conf-volume
+      volumes:
+      - name: image-volume
+        persistentVolumeClaim:
+          claimName: pigallery2-pvc
+      - name: conf-volume
+        hostPath:
+          path: /opt/pigallery2-prod
+          type: Directory
+status: {}
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: pigallery2
+  name: pigallery2
+  namespace: production
+spec:
+  ports:
+  - name: "http"
+    port: 80
+    protocol: TCP
+    targetPort: 80
+    nodePort: 30081
+  selector:
+    app: pigallery2
+  type: NodePort
+status:
+  loadBalancer: {}
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: pigallery2
+  name: pigallery2-config
+  namespace: production
+data:
+  Client-Faces-enabled: "false"
+  SEARCH_ENABLED: "false"
+  Client-authenticationRequired: "false"
+  Client-Sharing-enabled: "false"
+  Server-Database-type: "mysql"
+  MYSQL_HOST: "mariadb-svc.production.svc.cluster.local"
+  MYSQL_PORT: "3306"
+
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pigallery2-prod-pv
+  labels:
+    type: local
+spec:
+  storageClassName: pig-prod
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/opt/images"
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pigallery2-pvc
+  namespace: production
+spec:
+  storageClassName: pig-prod
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
