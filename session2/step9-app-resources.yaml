@@ -67,7 +67,7 @@ spec:
             cpu: "10m"
           limits:
             memory: "200Mi"
-            cpu: "100m"
+            cpu: "300m"
         volumeMounts:
         - mountPath: /app/data/images
           name: image-volume
