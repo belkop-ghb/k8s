@@ -11,12 +11,12 @@ spec:
   - Ingress
   ingress:
   - from:
-    - podSelector:
+    - namespaceSelector:
+        matchLabels:
+          stage: production
+      podSelector:
         matchLabels:
           access: mariadb
-          stage: production
     ports:
     - protocol: TCP
       port: 3306
-
-

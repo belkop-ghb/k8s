@@ -15,7 +15,6 @@ spec:
       labels:
         app: pigallery2
         access: mariadb
-        stage: production
       namespace: production
     spec:
       containers:
