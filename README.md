@@ -59,4 +59,9 @@ ubuntu   Ready    <none>   3d8h   v1.20.7-34+df7df22a741dbc   172.27.216.204   <
 * Persistent volume
 * Probes
 
-## [Session2 - in preparation](session2)
+## [Session2](session2)
+* Database pod
+* Connect application with database
+* Namespaces
+* Network policy
+* Resources
