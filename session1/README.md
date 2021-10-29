@@ -21,7 +21,7 @@ kubectl run pigallery2 --image=bpatrik/pigallery2
 kubectl run pigallery2 --image=bpatrik/pigallery2 --dry-run=client -o yaml > template.yaml
 ```
 
-Template has been created for you - see step1-pod.yaml
+Template has been created for you - see [step1-pod.yaml](step1-pod.yaml)
 
 To apply the template:
 
@@ -35,7 +35,7 @@ Service will expose the pod port.
 
 [Kubernetes services](https://kubernetes.io/docs/concepts/services-networking/service/ "Kubernetes services")
 
-You can generate service template (already generated as step2-service.yaml):
+You can generate service template (already generated as [step2-service.yaml](step2-service.yaml)):
 
 ```sh
 kubectl create service nodeport pigallery2 --tcp=80 --node-port=30080 --dry-run=client -o yaml > templateService.yaml
@@ -71,7 +71,7 @@ Deployment will cover replicas and container image version.
 
 [Kubernetes deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/ "Kubernetes deployment")
 
-You can create a deployment template (already generated as step3-deployment.yaml):
+You can create a deployment template (already generated as [step3-deployment.yaml](step3-deployment.yaml)):
 
 ```sh
 kubectl create deployment pigallery2 --image=bpatrik/pigallery2:1.8.2 --replicas=1 -o yaml --dry-run=client > deploymentTemplate.yaml
@@ -154,6 +154,8 @@ kubectl scale deployment pigallery2 --replicas=1
 Application manual:
 [Pigallery2 manual page](https://github.com/bpatrik/pigallery2/blob/master/MANPAGE.md "Pigallery2 manual page")
 
+See [step4-env-var.yaml](step4-env-var.yaml)
+
 ```sh
 kubectl apply -f session1/step4-env-var.yaml
 ```
@@ -164,7 +166,7 @@ Check the application in browser.
 
 [Kubernetes configmap](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/ "Kubernetes configmap")
 
-Check and apply the template step5-configmap.yaml
+Check and apply the template [step5-configmap.yaml](step5-configmap.yaml)
 
 ```sh
 kubectl apply -f session1/step5-configmap.yaml
@@ -174,7 +176,7 @@ kubectl apply -f session1/step5-configmap.yaml
 
 [Kubernetes volume](https://kubernetes.io/docs/concepts/storage/volumes/ "Kubernetes volume")
 
-Check and apply the template:
+Check and apply the template [step6-volume.yaml](step6-volume.yaml):
 
 ```sh
 kubectl apply -f session1/step6-volume.yaml
@@ -198,7 +200,7 @@ kubectl delete pod -l app=pigallery2
 
 [Kubernetes persistent volume](https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/ "Kubernetes persistent volume")
 
-Check and apply template file:
+Check and apply template file [step7-persistent-volume.yaml](step7-persistent-volume.yaml):
 
 ```sh
 kubectl apply -f session1/step7-persistent-volume.yaml
@@ -221,7 +223,7 @@ kubectl describe pod -l app=pigallery2
 
 [Kubernetes probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/ "Kubernetes probes")
 
-Check and apply template file:
+Check and apply template file [step8-probes.yaml](step8-probes.yaml):
 
 ```sh
 kubectl apply -f session1/step8-probes.yaml
