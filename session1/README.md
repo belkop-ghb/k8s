@@ -12,7 +12,7 @@ See central docker image repository:
 One-time create - only for test purpose
 
 ```sh
-kubectl run pigallery2 --image=bpatrik/pigallery2
+kubectl run pigallery2 --image=bpatrik/pigallery2:1.8.2
 ```
 
 ### Template way
